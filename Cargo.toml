@@ -1,0 +1,86 @@
+[package]
+name = "vedgov-core"
+version = "0.1.0"
+edition = "2021"
+authors = ["Ved DeFi Team"]
+description = "VedGov - Decentralized inter-government payment system"
+license = "MIT"
+repository = "https://github.com/Ved-DeFi/VedGov"
+
+[dependencies]
+# Core blockchain dependencies
+substrate-frame-system = "4.0.0-dev"
+substrate-frame-support = "4.0.0-dev"
+substrate-primitives-core = "7.0.0"
+substrate-primitives-runtime = "7.0.0"
+sp-api = "4.0.0-dev"
+sp-block-builder = "4.0.0-dev"
+sp-blockchain = "4.0.0-dev"
+sp-consensus = "0.10.0-dev"
+sp-consensus-aura = "0.10.0-dev"
+sp-core = "7.0.0"
+sp-inherents = "4.0.0-dev"
+sp-offchain = "4.0.0-dev"
+sp-runtime = "7.0.0"
+sp-session = "4.0.0-dev"
+sp-std = "5.0.0"
+sp-transaction-pool = "4.0.0-dev"
+sp-version = "5.0.0"
+
+# Consensus - Enhanced for government networks
+sc-consensus-aura = "0.10.0-dev"
+sc-consensus-slots = "0.10.0-dev"
+sc-finality-grandpa = "0.10.0-dev"
+
+# Networking - Secure government networking
+sc-network = "0.10.0-dev"
+sc-network-common = "0.10.0-dev"
+
+# Government-specific dependencies
+# Hardware Security Module integration
+pkcs11 = "0.8"
+# International standards compliance
+iso20022 = "0.1" # Example for financial messaging standards
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+codec = { package = "parity-scale-codec", version = "3.0.0", default-features = false }
+scale-info = { version = "2.0.0", default-features = false, features = ["derive"] }
+
+# Async
+tokio = { version = "1.0", features = ["full"] }
+futures = "0.3"
+
+# Enhanced Cryptography for government use
+ed25519-dalek = "1.0"
+blake2 = "0.10"
+sha3 = "0.10"
+# Post-quantum cryptography preparation
+pqcrypto-dilithium = "0.4"
+
+# Utilities
+clap = { version = "4.0", features = ["derive"] }
+log = "0.4"
+env_logger = "0.10"
+
+[features]
+default = ["std"]
+std = [
+    "codec/std",
+    "scale-info/std", 
+    "sp-std/std",
+    "sp-core/std",
+    "sp-runtime/std",
+]
+government-hsm = ["pkcs11"]
+post-quantum = ["pqcrypto-dilithium"]
+
+[workspace]
+members = [
+    "pallets/vedgov",
+    "pallets/government-validation",
+    "pallets/inter-country-payments", 
+    "pallets/compliance",
+    "runtime",
+    "node",
+]
